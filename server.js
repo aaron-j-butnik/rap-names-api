@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const PORT = 3000;
 const bodyParser = require("body-parser");
+const { MongoClient } = require("mongodb");
 const app = express();
 
 app.use(bodyParser.json());
@@ -28,22 +29,36 @@ const rappers = {
   },
 };
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
+MongoClient.connection(connectionString)
+  .then((client) => {
+    console.log("Connected to Database");
+    const db = client.db("rap-names");
+    const rappersCollection = db.collection("rappers");
 
-app.get("/api", (req, res) => {
-  res.json(rappers);
-});
+    app.get("/", (req, res) => {
+      db.collection("collection-one")
+        .find()
+        .toArray()
+        .then((results) => {
+          res.render("index.ejs", { rapName: results });
+        })
+        .catch((error) => console.log(error));
+    });
 
-app.get("/api/:name", (req, res) => {
-  const rapperName = req.params.name.toLocaleLowerCase();
-  if (rappers[rapperName]) {
-    res.json(rappers[rapperName]);
-  } else {
-    res.json(rappers.unknown);
-  }
-});
+    app.get("/api", (req, res) => {
+      res.json(rappers);
+    });
+
+    app.get("/api/:name", (req, res) => {
+      const rapperName = req.params.name.toLocaleLowerCase();
+      if (rappers[rapperName]) {
+        res.json(rappers[rapperName]);
+      } else {
+        res.json(rappers.unknown);
+      }
+    });
+  })
+  .catch((error) => console.error(error));
 
 app.listen(process.env.PORT || PORT, (err) => {
   if (err) console.log(err);
