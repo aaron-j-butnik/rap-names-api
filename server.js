@@ -1,9 +1,14 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
 const PORT = 3000;
+const bodyParser = require("body-parser");
+const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+
+const connectionString = `mongodb+srv://aaronjbutnik:lindall9158@cluster0.6ycyxsr.mongodb.net/?retryWrites=true&w=majority`;
 
 const rappers = {
   "21 savage": {
