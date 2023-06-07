@@ -9,26 +9,9 @@ app.use(cors());
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 const connectionString = `mongodb+srv://aaronjbutnik:lindall9158@cluster0.6ycyxsr.mongodb.net/?retryWrites=true&w=majority`;
-
-// const rappers = {
-//   "21 savage": {
-//     birthName: "Shéyaa Bin Abraham-Joseph",
-//     age: 29,
-//     birthLocation: "London, England",
-//   },
-//   "little dicky": {
-//     birthName: "David Andrew Burd",
-//     age: 35,
-//     birthLocation: "Cheltenham Township, Pennsylvania",
-//   },
-//   unknown: {
-//     birthName: "unknown",
-//     age: 0,
-//     birthLocation: "unknown",
-//   },
-// };
 
 MongoClient.connect(connectionString)
   .then((client) => {
@@ -50,8 +33,25 @@ MongoClient.connect(connectionString)
       rappersCollection
         .insertOne(req.body)
         .then((result) => {
-          console.log(req.body);
           res.redirect("/");
+        })
+        .catch((error) => console.log(error));
+    });
+
+    //  app.put('/api/names'), (req, res) => {
+    //    rappersCollection
+    //       .findOneAndUpdate({
+
+    //       })
+    //  }
+    app.delete("/api/names", (req, res) => {
+      rappersCollection
+        .deleteOne({ name: req.body.name })
+        .then((result) => {
+          if (result.deletedCount === 0) {
+            return res.json("No names to delete.");
+          }
+          res.json("Deleted rapper name.");
         })
         .catch((error) => console.log(error));
     });
