@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>Rap Names API 2!!</h1>
-    <form action="/names" method="POST">
+    <form action="api/names" method="POST">
       <input type="text" placeholder="Rap Name" name="name" />
       <!-- <input type="text" placeholder="Birth Name" name="birthName" /> -->
       <button type="submit">Submit</button>
@@ -16,7 +16,6 @@
     <% for(var i = 0; i < rapName.length; i++) {%>
     <li class="info">
       <span><%= rapName[i].name %></span>
-      <!-- <span><%= birthName[i].birthName %></span> -->
     </li>
     <% } %>
   </body>

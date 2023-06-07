@@ -46,14 +46,15 @@ MongoClient.connect(connectionString)
         .catch((error) => console.log(error));
     });
 
-    //     app.post("/api/names", (req, res) => {
-    //       rappersCollection
-    //         .insertOne(req.body)
-    //         .then((result) => {
-    //           res.redirect("/");
-    //         })
-    //         .catch((error) => console.log(error));
-    //     });
+    app.post("/api/names", (req, res) => {
+      rappersCollection
+        .insertOne(req.body)
+        .then((result) => {
+          console.log(req.body);
+          res.redirect("/");
+        })
+        .catch((error) => console.log(error));
+    });
 
     //  app.get("/api/:name", (req, res) => {
     //    const rapperName = req.params.name.toLocaleLowerCase();
