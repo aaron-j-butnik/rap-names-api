@@ -49,7 +49,7 @@ MongoClient.connect(connectionString)
     //  }
     app.delete("/deleteName", (req, res) => {
       rappersCollection
-        .deleteOne({ name: req.body.stageName })
+        .deleteOne({ stageName: req.body.stageName })
         .then((result) => {
           if (result.deletedCount === 0) {
             return res.json("No names to delete.");
