@@ -29,7 +29,7 @@ MongoClient.connect(connectionString)
         .catch((error) => console.log(error));
     });
 
-    app.post("/api/names", (req, res) => {
+    app.post("/addName", (req, res) => {
       rappersCollection
         .insertOne(req.body)
         .then((result) => {
