@@ -20,7 +20,7 @@ MongoClient.connect(connectionString)
     const rappersCollection = db.collection("rappers");
 
     app.get("/", (req, res) => {
-      db.collection("rappers")
+      rappersCollection
         .find()
         .toArray()
         .then((results) => {
@@ -31,7 +31,7 @@ MongoClient.connect(connectionString)
 
     app.post("/addName", (req, res) => {
       rappersCollection
-        .insertOne(req.body)
+        .insertOne({ stageName: req.body.stageName })
         .then((result) => {
           res.redirect("/");
         })
