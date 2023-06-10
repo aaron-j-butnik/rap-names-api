@@ -10,12 +10,14 @@
     <h1>Rap Names API 2!!</h1>
     <form action="/addName" method="POST">
       <input type="text" placeholder="Rap Name" name="stageName" />
-      <!-- <input type="text" placeholder="Birth Name" name="birthName" /> -->
+      <input type="text" placeholder="Birth Name" name="birthName" />
       <button type="submit">Submit</button>
     </form>
     <% for(var i = 0; i < rapName.length; i++) {%>
     <li class="info">
       <span><%= rapName[i].stageName %></span>
+
+      <span><%= rapName[i].birthName %></span>
     </li>
     <% } %>
     <h2>Delete a Name</h2>

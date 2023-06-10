@@ -3,7 +3,7 @@ const deleteName = document.querySelector("#delete-name");
 const messageDiv = document.querySelector("#message");
 
 deleteButton.addEventListener("click", (_) => {
-  fetch("/api/names", {
+  fetch("/deleteName", {
     method: "delete",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

@@ -31,7 +31,10 @@ MongoClient.connect(connectionString)
 
     app.post("/addName", (req, res) => {
       rappersCollection
-        .insertOne({ stageName: req.body.stageName })
+        .insertOne({
+          stageName: req.body.stageName,
+          birthName: req.body.birthName,
+        })
         .then((result) => {
           res.redirect("/");
         })
@@ -44,9 +47,9 @@ MongoClient.connect(connectionString)
 
     //       })
     //  }
-    app.delete("/api/names", (req, res) => {
+    app.delete("/deleteName", (req, res) => {
       rappersCollection
-        .deleteOne({ name: req.body.name })
+        .deleteOne({ name: req.body.stageName })
         .then((result) => {
           if (result.deletedCount === 0) {
             return res.json("No names to delete.");
