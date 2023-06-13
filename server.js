@@ -22,6 +22,7 @@ MongoClient.connect(connectionString)
       rappersCollection
         .find()
         .toArray()
+        .sort({ likes: -1 })
         .then((results) => {
           res.render("index.ejs", { rapName: results });
         })
@@ -33,6 +34,7 @@ MongoClient.connect(connectionString)
         .insertOne({
           stageName: req.body.stageName,
           birthName: req.body.birthName,
+          likes: 0,
         })
         .then((result) => {
           res.redirect("/");
