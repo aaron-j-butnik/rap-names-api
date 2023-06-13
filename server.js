@@ -21,8 +21,8 @@ MongoClient.connect(connectionString)
     app.get("/", (req, res) => {
       rappersCollection
         .find()
-        .toArray()
         .sort({ likes: -1 })
+        .toArray()
         .then((results) => {
           res.render("index.ejs", { rapName: results });
         })
@@ -48,6 +48,18 @@ MongoClient.connect(connectionString)
 
     //       })
     //  }
+    app.delete("/trashCanDelete", (req, res) => {
+      rappersCollection
+        .deleteOne({
+          stageName: req.body.stageNameDelete,
+        })
+        .then((result) => {
+          res.redirect("/");
+          res.json();
+        })
+        .catch((error) => console.log(error));
+    });
+
     app.delete("/deleteName", (req, res) => {
       rappersCollection
         .deleteOne({ stageName: req.body.stageName })
@@ -59,15 +71,6 @@ MongoClient.connect(connectionString)
         })
         .catch((error) => console.log(error));
     });
-
-    //  app.get("/api/:name", (req, res) => {
-    //    const rapperName = req.params.name.toLocaleLowerCase();
-    //    if (rappers[rapperName]) {
-    //      res.json(rappers[rapperName]);
-    //    } else {
-    //      res.json(rappers.unknown);
-    //    }
-    //  });
   })
   .catch((error) => console.error(error));
 
