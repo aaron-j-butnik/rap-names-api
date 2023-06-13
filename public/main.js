@@ -7,34 +7,37 @@ trashCan.forEach((element) =>
   element.addEventListener("click", trashCanDelete)
 );
 
-function trashCanDelete() {
+async function trashCanDelete() {
   const sName = this.parentNode.childNodes[1].innerText;
-  fetch("/trashCanDelete", {
-    method: "delete",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ stageNameDelete: sName }),
-  }).then((res) => {
-    if (res.ok) res.json();
+  try {
+    const response = await fetch("/trashCanDelete", {
+      method: "delete",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ stageNameDelete: sName }),
+    });
+    const data = await response.json();
     location.reload();
-  });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-deleteButton.addEventListener("click", () => {
-  fetch("/deleteName", {
-    method: "delete",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      stageName: deleteName.value,
-    }),
-  })
-    .then((res) => {
-      if (res.ok) return res.json();
-    })
-    .then((response) => {
-      if (response === "No names to delete.") {
-        messageDiv.textContent = `All entries of '${deleteName.value}' have been deleted.`;
-      } else {
-        window.location.reload(true);
-      }
+deleteButton.addEventListener("click", async () => {
+  try {
+    const response = await fetch("/deleteName", {
+      method: "delete",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        stageName: deleteName.value,
+      }),
     });
+    const data = await response.json();
+    if (data === "No names to delete.") {
+      messageDiv.textContent = `All entries of '${deleteName.value}' have been deleted.`;
+    } else {
+      location.reload();
+    }
+  } catch (err) {
+    console.log(err);
+  }
 });
