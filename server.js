@@ -50,11 +50,10 @@ MongoClient.connect(connectionString)
             birthName: req.body.birthNameS,
             likes: req.body.likesS,
           },
-          { $set: { likes: request.body.likesS + 1 } }
+          { $set: { likes: req.body.likesS + 1 } }
         )
         .then((result) => {
-          console.log("Added One Like");
-          response.json("Like Added");
+          res.json("Like Added");
         })
         .catch((error) => console.error(error));
     });
