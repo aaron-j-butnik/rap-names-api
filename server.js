@@ -54,8 +54,7 @@ MongoClient.connect(connectionString)
           stageName: req.body.stageNameDelete,
         })
         .then((result) => {
-          res.redirect("/");
-          res.json();
+          res.json("Rapper Deleted.");
         })
         .catch((error) => console.log(error));
     });

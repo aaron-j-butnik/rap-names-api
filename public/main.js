@@ -1,9 +1,11 @@
 const deleteButton = document.querySelector("#delete-button");
 const deleteName = document.querySelector("#delete-name");
 const messageDiv = document.querySelector("#message");
-const trashCan = document.querySelector("#trash-can");
+const trashCan = document.querySelectorAll("#trash-can");
 
-trashCan.addEventListener("click", trashCanDelete);
+trashCan.forEach((element) =>
+  element.addEventListener("click", trashCanDelete)
+);
 
 function trashCanDelete() {
   const sName = this.parentNode.childNodes[1].innerText;
@@ -12,7 +14,7 @@ function trashCanDelete() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ stageNameDelete: sName }),
   }).then((res) => {
-    if (res.ok) return res.json();
+    if (res.ok) res.json();
     location.reload();
   });
 }
