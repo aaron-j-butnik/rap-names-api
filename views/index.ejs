@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/6b1a97de64.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
     <title>api-project</title>
   </head>
   <body>
@@ -17,8 +22,9 @@
     <% for(var i = 0; i < rapName.length; i++) {%>
     <li class="info">
       <span><%= rapName[i].stageName %></span>
-
       <span><%= rapName[i].birthName %></span>
+      <i class="fa-solid fa-thumbs-up"></i>
+      <i class="fa-solid fa-trash"></i>
     </li>
     <% } %>
     <h2>Delete a Name</h2>
