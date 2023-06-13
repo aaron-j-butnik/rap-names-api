@@ -26,7 +26,7 @@ MongoClient.connect(connectionString)
         .then((results) => {
           res.render("index.ejs", { rapName: results });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.error(error));
     });
 
     app.post("/addName", (req, res) => {
@@ -39,15 +39,26 @@ MongoClient.connect(connectionString)
         .then((result) => {
           res.redirect("/");
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.error(error));
     });
 
-    //  app.put('/api/names'), (req, res) => {
-    //    rappersCollection
-    //       .findOneAndUpdate({
+    app.put("/addLike", (req, res) => {
+      rappersCollection
+        .updateOne(
+          {
+            stageName: req.body.stageNameS,
+            birthName: req.body.birthNameS,
+            likes: req.body.likesS,
+          },
+          { $set: { likes: request.body.likesS + 1 } }
+        )
+        .then((result) => {
+          console.log("Added One Like");
+          response.json("Like Added");
+        })
+        .catch((error) => console.error(error));
+    });
 
-    //       })
-    //  }
     app.delete("/trashCanDelete", (req, res) => {
       rappersCollection
         .deleteOne({
@@ -56,7 +67,7 @@ MongoClient.connect(connectionString)
         .then((result) => {
           res.json("Rapper Deleted.");
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.error(error));
     });
 
     app.delete("/deleteName", (req, res) => {
@@ -68,7 +79,7 @@ MongoClient.connect(connectionString)
           }
           res.json("Deleted rapper name.");
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.error(error));
     });
   })
   .catch((error) => console.error(error));
